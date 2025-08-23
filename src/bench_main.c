@@ -32,6 +32,8 @@
 
 #define AUTH_TAG_LENGTH 16
 
+uint64_t start, end, cycles;
+
 int main(int argc, char **argv)
 {
     
@@ -63,7 +65,7 @@ int main(int argc, char **argv)
     const byte authIn[] = { 0x01, 0x02, 0x03, 0x04 };
 
     /* Example plaintext (multiple of AES block size not required for GCM) */
-    const byte plain[] = "Hello AES-GCM 256-bit encryption!";
+    const byte plain[] = "Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!Hello AES-GCM 256-bit encryption!";
     byte cipher[sizeof(plain)];
     byte decrypted[sizeof(plain)];
     byte authTag[AUTH_TAG_LENGTH];
@@ -80,7 +82,9 @@ int main(int argc, char **argv)
         return -1;
     }
 
+
     /* Encrypt */
+    start = timer_hw->timerawl | ((uint64_t)timer_hw->timerawh << 32);
     ret = wc_AesGcmEncrypt(&aes,
         cipher, plain, sizeof(plain),
         iv, sizeof(iv),
@@ -90,6 +94,9 @@ int main(int argc, char **argv)
         printf("AES-GCM encryption failed, ret = %d\n", ret);
         return -1;
     }
+    end = timer_hw->timerawl | ((uint64_t)timer_hw->timerawh << 32);
+    cycles = end - start;
+    printf("Encryption took: %llu microseconds\n", cycles);
 
     printf("Ciphertext: ");
     for (int i = 0; i < sizeof(cipher); i++) printf("%02X", cipher[i]);
@@ -98,6 +105,7 @@ int main(int argc, char **argv)
     printf("\n");
 
     /* Decrypt */
+    start = timer_hw->timerawl | ((uint64_t)timer_hw->timerawh << 32);
     ret = wc_AesGcmDecrypt(&aes,
         decrypted, cipher, sizeof(cipher),
         iv, sizeof(iv),
@@ -109,9 +117,16 @@ int main(int argc, char **argv)
     }
 
     printf("Decrypted:  %s\n", decrypted);
+    end = timer_hw->timerawl | ((uint64_t)timer_hw->timerawh << 32);
+    cycles = end - start;
+    printf("Decryption took: %llu microseconds\n", cycles);
 
     wc_AesFree(&aes);
     printf("ENDED");
+    for (int i = 0; i < 5; i++) {
+        printf("SLEEP\n");
+        sleep_ms(1000);
+    }
     return 0;
     // int i;
     // int ret;
