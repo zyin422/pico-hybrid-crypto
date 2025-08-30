@@ -504,7 +504,7 @@ unsigned long get_rand_32(void);
 #define HAVE_SUPPORTED_CURVES
 #define WOLFSSL_BASE64_ENCODE
 
-// #define WOLFSSL_KEY_GEN /* For RSA Key gen only */
+#define WOLFSSL_KEY_GEN /* For RSA Key gen only */
 // #define KEEP_PEER_CERT
 // #define HAVE_COMP_KEY
 

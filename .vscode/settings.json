@@ -2,6 +2,10 @@
     "files.associations": {
         "stdint.h": "c",
         "stdio.h": "c",
-        "cstddef": "c"
+        "cstddef": "c",
+        "stdlib.h": "c",
+        "test.h": "c",
+        "rsa.h": "c",
+        "aes.h": "c"
     }
 }
