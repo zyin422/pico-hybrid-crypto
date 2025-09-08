@@ -6,6 +6,17 @@
         "stdlib.h": "c",
         "test.h": "c",
         "rsa.h": "c",
-        "aes.h": "c"
+        "aes.h": "c",
+        "settings.h": "c",
+        "bitset": "c",
+        "algorithm": "c",
+        "time.h": "c",
+        "benchmark.h": "c",
+        "malloc.h": "c",
+        "asn_public.h": "c",
+        "cstdint": "c",
+        "options.h": "c",
+        "string.h": "c",
+        "dilithium.h": "c"
     }
 }

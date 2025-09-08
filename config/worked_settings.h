@@ -42,9 +42,10 @@ extern "C"
 #define TARGET_EMBEDDED
 
 #define WOLFSSL_RPIPICO
-//#define WOLFSSL_SP_ARM_CORTEX_M_ASM
-#define HAVE_DILITHIUM
-#define WOLFSSL_WC_DILITHIUM
+#define WOLFSSL_SP_ARM_CORTEX_M_ASM
+#define WOLFSSL_SP_RSA
+
+
 
 
 #define WC_NO_HASHDRBG
@@ -81,10 +82,10 @@ extern time_t myTime(time_t *);
 /* Wolf Single Precision Math */
 #if 1
 #define WOLFSSL_HAVE_SP_RSA
-#define WOLFSSL_HAVE_SP_DH
-#define WOLFSSL_HAVE_SP_ECC
+// #define WOLFSSL_HAVE_SP_DH
+// #define WOLFSSL_HAVE_SP_ECC
 // #define WOLFSSL_SP_4096 /* Enable RSA/RH 4096-bit support */
-#define WOLFSSL_SP_384 /* Enable ECC 384-bit SECP384R1 support */
+// #define WOLFSSL_SP_384 /* Enable ECC 384-bit SECP384R1 support */
 
 // #define WOLFSSL_SP_CACHE_RESISTANT
 #define WOLFSSL_SP_MATH     /* only SP math - disables integer.c/tfm.c */
@@ -95,12 +96,11 @@ extern time_t myTime(time_t *);
 
 #ifdef TARGET_EMBEDDED
 /* use smaller version of code */
-#define WOLFSSL_SP_SMALL
+//#define WOLFSSL_SP_SMALL
 #else
 /* SP Assembly Speedups - specific to chip type */
 #define WOLFSSL_SP_ASM
 #endif
-
 /* Handled in CMake */
     // #define WOLFSSL_SP_X86_64
     // #define WOLFSSL_SP_X86
@@ -131,7 +131,7 @@ extern time_t myTime(time_t *);
 
 #if 1
 /* half as much memory but twice as slow */
-// #define RSA_LOW_MEM
+#define RSA_LOW_MEM
 
 /* Enables blinding mode, to prevent timing attacks */
 #define WC_RSA_BLINDING
@@ -244,7 +244,7 @@ extern time_t myTime(time_t *);
 /* ChaCha20 / Poly1305 */
 #undef HAVE_CHACHA
 #undef HAVE_POLY1305
-#if 1
+#if 0
 #define HAVE_CHACHA
 #define HAVE_POLY1305
 
@@ -255,7 +255,7 @@ extern time_t myTime(time_t *);
 /* Ed25519 / Curve25519 */
 #undef HAVE_CURVE25519
 #undef HAVE_ED25519
-#if 1
+#if 0
 #define HAVE_CURVE25519
 #define HAVE_ED25519 /* ED25519 Requires SHA512 */
 
@@ -268,7 +268,7 @@ extern time_t myTime(time_t *);
 /* Ed448 / Curve448 */
 #undef HAVE_CURVE448
 #undef HAVE_ED448
-#if 1
+#if 0
 #define HAVE_CURVE448
 #define HAVE_ED448 /* ED448 Requires SHA512 */
 #define WOLFSSL_SHAKE256
@@ -306,12 +306,12 @@ extern time_t myTime(time_t *);
 
 /* Sha512 */
 #undef WOLFSSL_SHA512
-#if 1
+#if 0
 #define WOLFSSL_SHA512
 
     /* Sha384 */
 #undef WOLFSSL_SHA384
-#if 1
+#if 0
 #define WOLFSSL_SHA384
 #endif
 
@@ -321,7 +321,7 @@ extern time_t myTime(time_t *);
 
 /* Sha3 */
 #undef WOLFSSL_SHA3
-#if 1
+#if 0
 #define WOLFSSL_SHA3
 #endif
 
@@ -335,7 +335,7 @@ extern time_t myTime(time_t *);
 
 /* HKDF */
 #undef HAVE_HKDF
-#if 1
+#if 0
 #define HAVE_HKDF
 #endif
 
@@ -506,11 +506,11 @@ unsigned long get_rand_32(void);
     /* Enable Features */
     /* ------------------------------------------------------------------------- */
 
-#define WOLFSSL_TLS13
-#define WOLFSSL_OLD_PRIME_CHECK /* Use faster DH prime checking */
-#define HAVE_TLS_EXTENSIONS
-#define HAVE_SUPPORTED_CURVES
-#define WOLFSSL_BASE64_ENCODE
+// #define WOLFSSL_TLS13
+// #define WOLFSSL_OLD_PRIME_CHECK /* Use faster DH prime checking */
+// #define HAVE_TLS_EXTENSIONS
+// #define HAVE_SUPPORTED_CURVES
+// #define WOLFSSL_BASE64_ENCODE
 
 #define WOLFSSL_KEY_GEN /* For RSA Key gen only */
 #define KEEP_PEER_CERT

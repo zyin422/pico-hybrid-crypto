@@ -14,6 +14,9 @@ project(wolf_pico_examples C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
+set(PICO_STACK_SIZE 0x20000)  # 128KB stack (increased from 16KB)
+set(PICO_HEAP_SIZE  0x20000)  # 128KB heap (increased from 32KB)
+
 # Initialize the SDK
 pico_sdk_init()
 
@@ -66,13 +69,13 @@ endif()
     target_compile_definitions(wolfssl PUBLIC
         WOLFSSL_USER_SETTINGS
     )
-    if (${PICO_PLATFORM} STREQUAL "rp2350-arm-s")
-        add_compile_definitions(wolfssl WOLFSSL_SP_ARM_CORTEX_M_ASM)
-    elseif (${PICO_PLATFORM} STREQUAL "rp2350-riscv")
-        add_compile_definitions(wolfSSL WOLFSSL_SP_RISCV32)
-    else()
-        add_compile_definitions(wolfssl WOLFSSL_SP_ARM_THUMB_ASM)
-    endif()
+    # if (${PICO_PLATFORM} STREQUAL "rp2350-arm-s")
+    #     add_compile_definitions(wolfssl WOLFSSL_SP_ARM_CORTEX_M_ASM)
+    # elseif (${PICO_PLATFORM} STREQUAL "rp2350-riscv")
+    #     add_compile_definitions(wolfSSL WOLFSSL_SP_RISCV32)
+    # else()
+    #     add_compile_definitions(wolfssl WOLFSSL_SP_ARM_THUMB_ASM)
+    # endif()
 
     target_link_libraries(wolfssl
         pico_stdlib
@@ -124,7 +127,18 @@ endif()
         pico_stdlib
         pico_rand
     )
+    
+    # target_compile_definitions(benchmark PRIVATE 
+    #     PICO_STACK_SIZE=0x60000         # 384KB stack (most important!)
+    #     PICO_HEAP_SIZE=0x8000           # 32KB heap (minimal needed)
+    #     PICO_USE_STACK_GUARDS=1
+    # )
+    set_target_properties(benchmark PROPERTIES PICO_TARGET_LINKER_SCRIPT 
+    ${CMAKE_SOURCE_DIR}/memmap_custom.ld)
 
+    target_compile_definitions(benchmark PRIVATE 
+        PICO_STACK_SIZE=0x10000
+    )
     if (USE_UART)
         pico_enable_stdio_usb(benchmark 0)
         pico_enable_stdio_uart(benchmark 1)
@@ -134,13 +148,13 @@ endif()
     endif()
 
 
-    if (${PICO_PLATFORM} STREQUAL "rp2350")
-        add_compile_definitions(wolfssl WOLFSSL_SP_ARM_CORTEX_M_ASM)
-    elseif (${PICO_PLATFORM} STREQUAL "rp2350-riscv")
-        add_compile_definitions(wolfSSL WOLFSSL_SP_RISCV32)
-    else()
-        add_compile_definitions(wolfssl WOLFSSL_SP_ARM_THUMB_ASM)
-    endif()
+    # if (${PICO_PLATFORM} STREQUAL "rp2350")
+    #     add_compile_definitions(wolfssl WOLFSSL_SP_ARM_CORTEX_M_ASM)
+    # elseif (${PICO_PLATFORM} STREQUAL "rp2350-riscv")
+    #     add_compile_definitions(wolfSSL WOLFSSL_SP_RISCV32)
+    # else()
+    #     add_compile_definitions(wolfssl WOLFSSL_SP_ARM_THUMB_ASM)
+    # endif()
 
     pico_add_extra_outputs(benchmark)
 ### End of Benchmark wolfCrypt algorithms
