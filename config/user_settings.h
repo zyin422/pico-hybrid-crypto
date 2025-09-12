@@ -42,9 +42,24 @@ extern "C"
 #define TARGET_EMBEDDED
 
 #define WOLFSSL_RPIPICO
-//#define WOLFSSL_SP_ARM_CORTEX_M_ASM
+
+// #define WOLFSSL_NO_ASM       // disables all ASM optimizations
+#define WOLFSSL_SP_ARM_CORTEX_M_ASM
+#define WOLFSSL_SP_SMALL     // small math routines
+#define SP_WORD_SIZE 32      // 32-bit math only
+
 #define HAVE_DILITHIUM
 #define WOLFSSL_WC_DILITHIUM
+#define WOLFSSL_DILITHIUM_SMALL
+
+#define NO_INT128
+#define WOLFSSL_SHAKE128
+#define WOLFSSL_SHAKE256
+
+
+#define WOLFSSL_HAVE_MLKEM
+#define WOLFSSL_WC_MLKEM
+#define WOLFSSL_WC_ML_KEM_512
 
 
 #define WC_NO_HASHDRBG
@@ -297,7 +312,7 @@ extern time_t myTime(time_t *);
 // #define USE_SLOW_SHA256
 
 /* Sha224 */
-#if 0
+#if 1
 #define WOLFSSL_SHA224
 #endif
 #else
@@ -506,11 +521,11 @@ unsigned long get_rand_32(void);
     /* Enable Features */
     /* ------------------------------------------------------------------------- */
 
-#define WOLFSSL_TLS13
-#define WOLFSSL_OLD_PRIME_CHECK /* Use faster DH prime checking */
-#define HAVE_TLS_EXTENSIONS
-#define HAVE_SUPPORTED_CURVES
-#define WOLFSSL_BASE64_ENCODE
+// #define WOLFSSL_TLS13
+// #define WOLFSSL_OLD_PRIME_CHECK /* Use faster DH prime checking */
+// #define HAVE_TLS_EXTENSIONS
+// #define HAVE_SUPPORTED_CURVES
+// #define WOLFSSL_BASE64_ENCODE
 
 #define WOLFSSL_KEY_GEN /* For RSA Key gen only */
 #define KEEP_PEER_CERT

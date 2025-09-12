@@ -17,6 +17,9 @@
         "cstdint": "c",
         "options.h": "c",
         "string.h": "c",
-        "dilithium.h": "c"
+        "dilithium.h": "c",
+        "mlkem.h": "c",
+        "random.h": "c",
+        "compare": "c"
     }
 }

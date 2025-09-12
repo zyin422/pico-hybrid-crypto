@@ -3,13 +3,12 @@
 #include <string.h>
 #include "pico/stdlib.h"
 
-#include <wolfssl/options.h>
+#include <wolfssl/wolfcrypt/sha3.h>
 #include <wolfssl/wolfcrypt/dilithium.h>
 #include <wolfssl/wolfcrypt/random.h>
 
 int main() {
     stdio_init_all();
-    wolfSSL_Init();
     int rc = 0;
     MlDsaKey key;
     WC_RNG rng;
@@ -17,13 +16,18 @@ int main() {
     word32 sig_len = 0;
     const char *msg = "test message";
     int verify_res = 0;
+
+    for (int i = 0; i < 5; i++) {
+        printf("SLEEP\n");
+        sleep_ms(1000);
+    }
     
     // Initialize
     wc_InitRng(&rng);
     wc_MlDsaKey_Init(&key, NULL, INVALID_DEVID);
     
     // Set ML-DSA-44 (Category 2)
-    wc_MlDsaKey_SetParams(&key, 2);
+    wc_MlDsaKey_SetParams(&key, WC_ML_DSA_44);
     
     // Generate key pair
     rc = wc_MlDsaKey_MakeKey(&key, &rng);
@@ -36,13 +40,11 @@ int main() {
     wc_MlDsaKey_GetSigLen(&key, (int*)&sig_len);
     sig = malloc(sig_len);
     
-    // Sign message
     rc = wc_MlDsaKey_Sign(&key, sig, &sig_len, (const byte*)msg, strlen(msg), &rng);
     if (rc != 0) {
         printf("Signing failed: %d\n", rc);
         goto cleanup;
     }
-    
     // Verify signature
     rc = wc_MlDsaKey_Verify(&key, sig, sig_len, (const byte*)msg, strlen(msg), &verify_res);
     

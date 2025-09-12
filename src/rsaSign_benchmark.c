@@ -7,7 +7,7 @@
 #include <wolfssl/wolfcrypt/sha256.h>
 #include <wolfssl/wolfcrypt/random.h>
 
-#define MSG_BITS 4096       // 128, 256, 1024, 4096
+#define MSG_BITS 128       // 128, 256, 1024, 4096
 #define MSG_BYTES (MSG_BITS / 8)
 #define RSA_BITS 2048      // 512, 1024, 2048, 4096
 #define RSA_EXP 65537
