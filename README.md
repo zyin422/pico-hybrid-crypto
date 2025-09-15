@@ -1,5 +1,5 @@
 # Pico Hybrid Cryptography: Classical vs Post-Quantum
-Performance evaluation and benchmarking of classical and post-quantum cryptographic protocols on the Raspberry Pi Pico 2W microcontroller.
+Performance evaluation and benchmarking of classical and post-quantum cryptographic protocols on the Raspberry Pi Pico 2W microcontroller with WolfSSL.
 
 ## Overview
 This project implements and benchmarks two cryptographic protocols on resource-constrained hardware:
@@ -14,7 +14,7 @@ This project implements and benchmarks two cryptographic protocols on resource-c
 - AES-256-GCM encryption
 
 ## Key Results
-Our benchmarks on the Pico 2W show that post-quantum algorithms are competitive with classical ones:
+Benchmarks on the Pico 2W show that post-quantum algorithms are competitive with classical ones:
 
 - **Key Generation:** ML-KEM/ML-DSA are orders of magnitude faster than RSA  
 - **Encryption:** AES-256 adds only ~0.2ms overhead vs AES-128  
@@ -41,8 +41,12 @@ pico-hybrid-crypto/
 ## Prerequisites
 **Hardware:** Raspberry Pi Pico 2W or compatible RP2350 board  
 **Software:**
+The Raspberry Pi Pico SDK needs to be installed. WolfSSL is also necessary. They can be installed with:
+```
+git clone https://github.com/raspberrypi/pico-sdk.git
+git clone https://github.com/wolfSSL/wolfssl.git
+```
 The ARM compiler and CMake need to be installed. In Debian / Ubuntu:
-
 ```
 sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
 ```
@@ -50,8 +54,6 @@ sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-n
 
 ### Setup dependencies:
 ```
-git clone https://github.com/raspberrypi/pico-sdk.git
-git clone https://github.com/wolfSSL/wolfssl.git
 export PICO_SDK_PATH=/path/to/pico-sdk
 export WOLFSSL_ROOT=/path/to/wolfssl
 ```
